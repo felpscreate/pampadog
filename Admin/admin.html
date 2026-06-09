@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <section id="admin-login-screen" style="min-height:100vh; display:none; align-items:center; justify-content:center; padding:24px; background:var(--dark);">
+  <section id="admin-login-screen" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--dark);">
     <form id="admin-login-form" style="width:100%; max-width:380px; background:var(--dark-2); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:28px; box-shadow:var(--shadow-card);">
       <div style="text-align:center; margin-bottom:22px;">
         <img src="../Logo.png" alt="Pampa Dog Logo" style="height:64px; width:auto; object-fit:contain; margin:0 auto 12px;">
@@ -37,7 +37,7 @@
   </section>
 
   <!-- HEADER SIMPLIFICADO -->
-  <header class="header" id="header">
+  <header class="header" id="header" style="display:none;">
     <div class="header-inner">
       <a href="../index.html" class="logo">
         <img src="../Logo.png" alt="Pampa Dog Logo" style="height: 48px; width: auto; object-fit: contain;">
@@ -50,7 +50,7 @@
     </div>
   </header>
 
-  <main style="padding-top: var(--header-h);">
+  <main style="padding-top: var(--header-h); display:none;">
     <section class="admin-container">
       <div class="admin-header" style="flex-wrap: wrap; gap: 20px;">
         <div>
@@ -166,8 +166,8 @@
     </div>
   </div>
 
-  <script src="../supabase.js?v=admin-login"></script>
-  <script src="../data.js?v=admin-login"></script>
-  <script src="admin.js?v=admin-login"></script>
+  <script src="../supabase.js?v=admin-login-2"></script>
+  <script src="../data.js?v=admin-login-2"></script>
+  <script src="admin.js?v=admin-login-2"></script>
 </body>
 </html>
