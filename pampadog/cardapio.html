@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cardápio - Pampa Dog</title>
+  <meta name="description" content="Conheça o cardápio completo da Pampa Dog: Hot Dogs, Clássicos do Rio Grande do Sul, Combos e Bebidas." />
+  <link rel="stylesheet" href="style.css?v=cardapio-restore" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌭</text></svg>" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" role="banner">
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html" class="logo" aria-label="Pampa Dog - Página inicial">
+        <img src="Logo.png" alt="Pampa Dog Logo" style="height: 56px; width: auto; object-fit: contain;">
+      </a>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="cardapio.html" class="active">Cardápio</a></li>
+        <li><a href="sobre.html">Sobre Nós</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+        <li class="nav-cta-wrap">
+          <a href="https://www.ifood.com.br/delivery/montes-claros-mg/pampa-dog-cachorro-quente-gaucho-sagrada-familia/5d9fef41-5d75-4d90-aed8-82a3062d49ee?utm_medium=share" target="_blank" rel="noopener" class="nav-cta" id="nav-ifood-btn">
+            <span class="ifood-mark" aria-hidden="true">iFood</span> Pedir no iFood
+          </a>
+          <a href="https://pedido.anota.ai/loja/pampa-dog-1?f=msa" target="_blank" rel="noopener" class="nav-cta anota-ai-btn" id="nav-anota-btn" style="background: var(--anota-ai-color, #7B1FA2); margin-left: 8px;">
+            📱 Pedir Agora
+          </a>
+        </li>
+      </ul>
+
+      <button class="hamburger" id="hamburger-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <p class="section-label" style="justify-content: center;">Pampa Dog</p>
+      <h1 class="section-title" style="font-size: clamp(40px, 6vw, 72px);">
+        Cardápio
+      </h1>
+      <p class="section-sub" style="margin: 16px auto 0; text-align: center;">
+        Escolha seu favorito e peça agora.
+      </p>
+    <div class="cardapio-scroll-cue" aria-hidden="true">⬇️</div>
+    </div>
+  </div>
+
+  <!-- FILTROS -->
+  <nav class="cat-filter" aria-label="Filtros do cardápio">
+    <div class="cat-filter-inner">
+      <button class="cat-btn active" data-cat="all" id="cat-all">🍽️ Todos</button>
+      <button class="cat-btn" data-cat="hotdogs" id="cat-hotdogs">🌭 Hot Dogs</button>
+      <button class="cat-btn" data-cat="classicos" id="cat-classicos">🌟 Clássicos do Rio Grande do Sul</button>
+      <button class="cat-btn" data-cat="combos" id="cat-combos">🎁 Combos</button>
+      <button class="cat-btn" data-cat="bebidas" id="cat-bebidas">🥤 Bebidas</button>
+    </div>
+  </nav>
+
+  <!-- CARDÁPIO -->
+  <main>
+    <section class="menu-section" data-cat="hotdogs">
+      <h2 class="menu-section-title" id="section-hotdogs">🌭 Hot Dogs</h2>
+      <div class="menu-grid"></div>
+    </section>
+
+    <section class="menu-section" data-cat="classicos">
+      <h2 class="menu-section-title" id="section-classicos">🌟 Clássicos do Rio Grande do Sul</h2>
+      <div class="menu-grid"></div>
+    </section>
+
+    <section class="menu-section" data-cat="combos">
+      <h2 class="menu-section-title" id="section-combos">🎁 Combos</h2>
+      <div class="menu-grid"></div>
+    </section>
+
+    <section class="menu-section" data-cat="bebidas">
+      <h2 class="menu-section-title" id="section-bebidas">🥤 Bebidas</h2>
+      <div class="menu-grid"></div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a href="index.html" class="logo" style="display: inline-flex;">
+            <img src="Logo.png" alt="Pampa Dog Logo" style="height: 48px; width: auto; object-fit: contain;">
+          </a>
+          <p>O melhor sabor do sul num único lugar. Venha nos visitar ou peça pelo iFood!</p>
+          <div class="social-links" style="margin-top: 20px;">
+            <a href="https://www.instagram.com/pampadog.oficial/" target="_blank" rel="noopener" class="social-btn instagram"><span class="instagram-mark" aria-hidden="true"></span></a>
+            <a href="https://wa.me/553899063376" target="_blank" rel="noopener" class="social-btn whatsapp">💬</a>
+            <a href="https://www.ifood.com.br/delivery/montes-claros-mg/pampa-dog-cachorro-quente-gaucho-sagrada-familia/5d9fef41-5d75-4d90-aed8-82a3062d49ee?utm_medium=share" target="_blank" rel="noopener" class="social-btn ifood"><span class="ifood-mark" aria-hidden="true">iFood</span></a>
+            <a href="https://pedido.anota.ai/loja/pampa-dog-1?f=msa" target="_blank" rel="noopener" class="social-btn anotaai">📱</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="index.html">→ Início</a></li>
+            <li><a href="cardapio.html">→ Cardápio</a></li>
+            <li><a href="sobre.html">→ Sobre Nós</a></li>
+            <li><a href="index.html#contato">→ Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Atendimento</h4>
+          <ul>
+            <li><a href="https://pedido.anota.ai/loja/pampa-dog-1?f=msa" target="_blank" rel="noopener">📱 Pedir Agora pela Loja</a></li>
+            <li><a href="https://www.ifood.com.br/delivery/montes-claros-mg/pampa-dog-cachorro-quente-gaucho-sagrada-familia/5d9fef41-5d75-4d90-aed8-82a3062d49ee?utm_medium=share" target="_blank" rel="noopener">🛵 Pedir pelo iFood</a></li>
+            <li><a href="https://wa.me/553899063376" target="_blank" rel="noopener">💬 Falar no WhatsApp</a></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&query=Av.%20Cula%20Mangabeira%2C%201608%20-%20Santo%20Expedito%2C%20Montes%20Claros%20-%20MG%2C%2039400-780" target="_blank" rel="noopener">📍 Veja como Chegar</a></li>
+            <li><a href="cardapio.html">📖 Ver Cardápio</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 <span>Pampa Dog</span>. Todos os direitos reservados.</p>
+        <p>🚀 Desenvolvido por <span><a href="https://felpscreate.github.io/"> Felps Create </a></span></p>
+      </div>
+    </div>
+  </footer>
+
+
+  <div class="cardapio-product-modal" id="cardapio-product-modal" aria-hidden="true">
+    <div class="cardapio-product-dialog" role="dialog" aria-modal="true" aria-labelledby="cardapio-modal-title">
+      <button type="button" class="cardapio-modal-close" id="cardapio-modal-close" aria-label="Fechar">&times;</button>
+      <div class="cardapio-modal-img" id="cardapio-modal-img"></div>
+      <div class="cardapio-modal-body">
+        <h3 id="cardapio-modal-title"></h3>
+        <p id="cardapio-modal-desc"></p>
+        <div class="cardapio-modal-footer">
+          <strong id="cardapio-modal-price"></strong>
+          <a href="#" target="_blank" rel="noopener" class="btn btn-primary btn-sm" id="cardapio-modal-order">Pedir Agora</a>
+        </div>
+      </div>
+    </div>
+  </div>  <script src="supabase.js?v=cardapio-mobile"></script>
+  <script src="data.js?v=cardapio-mobile"></script>
+  <script src="script.js?v=cardapio-mobile"></script>
+</body>
+</html>
