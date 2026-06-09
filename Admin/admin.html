@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../style.css?v=admin-mobile-1">
 </head>
 <body>
 
@@ -84,6 +84,14 @@
 
       <div class="admin-list" id="admin-list">
         <!-- Renderizado via JS -->
+      </div>
+
+      <div class="admin-mobile-fab-wrap" id="admin-mobile-fab-wrap">
+        <div class="admin-mobile-fab-menu" id="admin-mobile-fab-menu">
+          <button type="button" id="admin-mobile-backup">📦 Backup e restauração</button>
+          <button type="button" id="admin-mobile-add">➕ Adicionar Produto</button>
+        </div>
+        <button type="button" class="admin-mobile-fab" id="admin-mobile-fab" aria-label="Ações rápidas">+</button>
       </div>
     </section>
   </main>
@@ -158,6 +166,37 @@
           <div id="edit-img-preview" class="admin-img-preview" aria-hidden="true"></div>
         </div>
 
+        <div class="admin-mobile-flags" id="edit-mobile-flags">
+          <div class="switch-group">
+            <span>Promoção</span>
+            <label class="switch">
+              <input type="checkbox" id="edit-flag-promocao">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="switch-group">
+            <span>Mais pedido</span>
+            <label class="switch">
+              <input type="checkbox" id="edit-flag-mais-pedido">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="switch-group">
+            <span>Produto da semana</span>
+            <label class="switch">
+              <input type="checkbox" id="edit-flag-produto-semana">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="switch-group">
+            <span>50% OFF</span>
+            <label class="switch">
+              <input type="checkbox" id="edit-flag-50off">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+
         <div style="margin-top: 20px; display: flex; justify-content: space-between;">
           <button type="button" class="btn btn-outline" id="btn-delete" style="color: #ff4d4d; border-color: #ff4d4d;">Excluir</button>
           <div>
@@ -169,8 +208,8 @@
     </div>
   </div>
 
-  <script src="../supabase.js?v=admin-login-3"></script>
-  <script src="../data.js?v=admin-login-3"></script>
-  <script src="admin.js?v=admin-login-3"></script>
+  <script src="../supabase.js?v=admin-mobile-1"></script>
+  <script src="../data.js?v=admin-mobile-1"></script>
+  <script src="admin.js?v=admin-mobile-1"></script>
 </body>
 </html>

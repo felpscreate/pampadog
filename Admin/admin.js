@@ -27,6 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginError = document.getElementById('admin-login-error');
   const logoutBtn = document.getElementById('btn-admin-logout');
   const mainEl = document.querySelector('main');
+  const mobileFab = document.getElementById('admin-mobile-fab');
+  const mobileFabMenu = document.getElementById('admin-mobile-fab-menu');
+  const mobileAddBtn = document.getElementById('admin-mobile-add');
+  const mobileBackupBtn = document.getElementById('admin-mobile-backup');
+  const flagPromocaoInput = document.getElementById('edit-flag-promocao');
+  const flagMaisPedidoInput = document.getElementById('edit-flag-mais-pedido');
+  const flagProdutoSemanaInput = document.getElementById('edit-flag-produto-semana');
+  const flag50OffInput = document.getElementById('edit-flag-50off');
   const AUTH_KEY = 'pampaDog_admin_auth';
   const AUTH_USER = 'pampadogmg';
   const AUTH_PASS = 'P4mp@dogrs';
@@ -137,6 +145,22 @@ document.addEventListener('DOMContentLoaded', () => {
     productUrlGroup.style.display = isWhatsapp ? 'none' : 'block';
     productUrlInput.disabled = isWhatsapp;
     if (isWhatsapp) productUrlInput.value = '';
+  }
+
+  function syncFlagFields(product) {
+    if (flagPromocaoInput) flagPromocaoInput.checked = !!(product && product.isPromocao);
+    if (flagMaisPedidoInput) flagMaisPedidoInput.checked = !!(product && product.isMaisPedido);
+    if (flagProdutoSemanaInput) flagProdutoSemanaInput.checked = !!(product && product.isProdutoSemana);
+    if (flag50OffInput) flag50OffInput.checked = !!(product && product.is50Off);
+  }
+
+  function getFlagFields() {
+    return {
+      isPromocao: !!(flagPromocaoInput && flagPromocaoInput.checked),
+      isMaisPedido: !!(flagMaisPedidoInput && flagMaisPedidoInput.checked),
+      isProdutoSemana: !!(flagProdutoSemanaInput && flagProdutoSemanaInput.checked),
+      is50Off: !!(flag50OffInput && flag50OffInput.checked)
+    };
   }
 
   function setImagePreview(src) {
@@ -257,7 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let html = `<button class="admin-tab active" data-cat="all">🌟 Todos</button>`;
     
     for (const [cat, label] of Object.entries(PD.catLabel)) {
-      html += `<button class="admin-tab" data-cat="${cat}">${PD.catEmoji[cat]} ${label}</button>`;
+      const mobileLabel = cat === 'classicos' ? 'Clássicos' : label;
+      html += `<button class="admin-tab" data-cat="${cat}">${PD.catEmoji[cat]} <span class="admin-tab-full">${label}</span><span class="admin-tab-short">${mobileLabel}</span></button>`;
     }
     
     tabsEl.innerHTML = html;
@@ -290,12 +315,18 @@ document.addEventListener('DOMContentLoaded', () => {
         : `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:24px;">${PD.getPlaceholder(p.category)}</div>`;
 
       return `
-        <div class="admin-card" style="background:${cardBackground};">
+        <div class="admin-card" data-id="${p.id}" style="background:${cardBackground};">
           <div class="admin-card-header">
             <div class="admin-card-img">${imgHtml}</div>
-            <div>
+            <div class="admin-card-info">
               <div class="admin-card-title">${p.name}</div>
               <div class="admin-card-cat">${PD.catLabel[normalizeCategory(p.category)]} • ${PD.displayPrice(p.price)}</div>
+              <div class="admin-mobile-badges" aria-label="Indicadores ativos">
+                ${p.isPromocao ? '<span>Promoção</span>' : ''}
+                ${p.isMaisPedido ? '<span>Mais pedido</span>' : ''}
+                ${p.isProdutoSemana ? '<span>Semana</span>' : ''}
+                ${p.is50Off ? '<span>50% OFF</span>' : ''}
+              </div>
             </div>
           </div>
           
@@ -349,6 +380,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // showToast('Atualizado!'); // Opcional
       });
     });
+
+    listEl.querySelectorAll('.admin-card').forEach(card => {
+      card.addEventListener('click', (event) => {
+        if (!window.matchMedia('(max-width: 767px)').matches) return;
+        if (event.target.closest('button, input, label, a')) return;
+        window.editProduct(card.getAttribute('data-id'));
+      });
+    });
   }
 
   // EVENTOS GERAIS
@@ -357,6 +396,30 @@ document.addEventListener('DOMContentLoaded', () => {
       const panel = document.getElementById('backup-panel');
       panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
     });
+
+    if (mobileFab && mobileFabMenu) {
+      mobileFab.addEventListener('click', () => {
+        mobileFabMenu.classList.toggle('active');
+      });
+    }
+
+    if (mobileAddBtn) {
+      mobileAddBtn.addEventListener('click', () => {
+        if (mobileFabMenu) mobileFabMenu.classList.remove('active');
+        document.getElementById('btn-add').click();
+      });
+    }
+
+    if (mobileBackupBtn) {
+      mobileBackupBtn.addEventListener('click', () => {
+        if (mobileFabMenu) mobileFabMenu.classList.remove('active');
+        const panel = document.getElementById('backup-panel');
+        if (panel && panel.style.display === 'none') {
+          document.getElementById('btn-backup-toggle').click();
+        }
+        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
 
     document.getElementById('close-modal').addEventListener('click', closeModal);
     document.getElementById('btn-cancel').addEventListener('click', closeModal);
@@ -388,6 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
       linkTypeSelect.value = 'whatsapp';
       productUrlInput.value = '';
       syncLinkTypeFields();
+      syncFlagFields(null);
       document.getElementById('edit-img-cardapio').value = '';
       resetUploadPreview();
       
@@ -485,7 +549,8 @@ document.addEventListener('DOMContentLoaded', () => {
         productUrl: linkTypeSelect.value === 'outros' ? productUrlInput.value.trim() : '',
         imgCardapio: imageUrl,
         imgHome: '',
-        imgHero: original.imgHero || ''
+        imgHero: original.imgHero || '',
+        ...getFlagFields()
       });
       
       await PD.updateProduct(updated);
@@ -508,6 +573,7 @@ document.addEventListener('DOMContentLoaded', () => {
     linkTypeSelect.value = resolveLinkType(p);
     productUrlInput.value = linkTypeSelect.value === 'outros' ? (p.productUrl || '') : '';
     syncLinkTypeFields();
+    syncFlagFields(p);
     document.getElementById('edit-img-cardapio').value = p.imgCardapio || '';
     resetUploadPreview();
     
