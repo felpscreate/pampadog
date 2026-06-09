@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Pampa Dog | Painel Admin</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <section id="admin-login-screen" style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--dark);">
+    <form id="admin-login-form" style="width:100%; max-width:380px; background:var(--dark-2); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:28px; box-shadow:var(--shadow-card);">
+      <div style="text-align:center; margin-bottom:22px;">
+        <img src="../Logo.png" alt="Pampa Dog Logo" style="height:64px; width:auto; object-fit:contain; margin:0 auto 12px;">
+        <h1 style="font-size:24px; margin:0;">Admin Pampa Dog</h1>
+        <p style="color:var(--gray); font-size:14px; margin-top:6px;">Acesse para gerenciar os produtos.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="admin-login-user">Login</label>
+        <input type="text" id="admin-login-user" autocomplete="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="admin-login-password">Senha</label>
+        <input type="password" id="admin-login-password" autocomplete="current-password" required>
+      </div>
+
+      <p id="admin-login-error" style="display:none; color:#ff6b6b; font-size:13px; margin-bottom:12px;">Login ou senha incorretos.</p>
+      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Entrar</button>
+    </form>
+  </section>
+
+  <!-- HEADER SIMPLIFICADO -->
+  <header class="header" id="header" style="display:none;">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        <img src="../Logo.png" alt="Pampa Dog Logo" style="height: 48px; width: auto; object-fit: contain;">
+        <span style="font-size: 14px; color: var(--gray); margin-left: 10px;"> ADMIN </span>
+      </a>
+      <nav class="nav-links">
+        <a href="../index.html">← Voltar ao Site</a>
+        <button class="btn btn-outline" id="btn-admin-logout" type="button" style="padding:8px 14px;">Sair</button>
+      </nav>
+    </div>
+  </header>
+
+  <main style="padding-top: var(--header-h); display:none;">
+    <section class="admin-container">
+      <div class="admin-header" style="flex-wrap: wrap; gap: 20px;">
+        <div>
+          <h1 class="section-title">Gerenciador de <span class="highlight">Produtos</span></h1>
+          <p class="section-sub">Controle imagens, preços e promoções da página inicial.</p>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-primary" id="btn-add">➕ Adicionar Produto</button>
+          <button class="btn btn-outline" id="btn-backup-toggle" type="button">Backup e restauração</button>
+        </div>
+      </div>
+
+      <!-- Área de Backup das configurações -->
+      <div class="admin-backup" id="backup-panel" style="background: var(--dark-2); padding: 20px; border-radius: 12px; margin-bottom: 30px; display: none; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+        <div>
+          <h3 style="margin-bottom: 5px;">Backup das Configurações</h3>
+          <p style="color: var(--gray); font-size: 14px;">Exporte ou importe todos os produtos e configurações.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-outline" id="btn-export" type="button">📦 Exportar Produtos</button>
+          <label class="btn btn-outline" style="cursor: pointer; margin: 0;">📥 Importar Produtos<input type="file" id="input-import" accept=".json" style="display: none;"></label>
+        </div>
+      </div>
+
+      <div class="admin-tabs" id="admin-tabs">
+        <!-- Renderizado via JS -->
+      </div>
+
+      <div class="admin-list" id="admin-list">
+        <!-- Renderizado via JS -->
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL DE EDIÇÃO -->
+  <div class="modal-overlay" id="edit-modal" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Editar Produto</h2>
+        <button class="modal-close" id="close-modal">&times;</button>
+      </div>
+      <form id="edit-form">
+        <input type="hidden" id="edit-id">
+        
+        <div class="form-group">
+          <label for="edit-category">Categoria</label>
+          <select id="edit-category" style="width:100%; padding:12px; background:var(--dark); border:1px solid #333; color:white; border-radius:8px;" required>
+            <option value="hotdogs">Hot Dogs</option>
+            <option value="classicos">Hot Dogs Clássicos</option>
+            <option value="combos">Combos</option>
+            <option value="bebidas">Bebidas</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-name">Nome do Produto</label>
+          <input type="text" id="edit-name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="edit-desc">Descrição</label>
+          <textarea id="edit-desc" rows="3" required></textarea>
+        </div>
+        
+        <div class="form-group" style="display:flex; gap:15px;">
+          <div style="flex:1;">
+            <label for="edit-price">Preço (R$)</label>
+            <input type="text" id="edit-price" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-link-type">Tipo de link</label>
+          <select id="edit-link-type">
+            <option value="whatsapp">WhatsApp</option>
+            <option value="outros">Outros</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="edit-product-url-group">
+          <label for="edit-product-url">URL do Produto</label>
+          <input type="text" id="edit-product-url" placeholder="Link do iFood, Anota A?, delivery ou marketplace...">
+          <small style="color:var(--gray);font-size:12px;margin-top:4px;display:block;">
+            *Use este campo apenas para links externos.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="edit-img-cardapio">URL Imagem (Cardápio / Padrão)</label>
+          <input type="text" id="edit-img-cardapio" placeholder="ex: img/burger.png">
+        </div>
+
+        <div class="form-group">
+          <label for="edit-img-upload">Upload da imagem do produto</label>
+          <label class="btn btn-outline admin-upload-btn" style="cursor:pointer; margin:0; display:inline-flex;">
+            Selecionar imagem
+            <input type="file" id="edit-img-upload" accept="image/*" style="display:none;">
+          </label>
+          <small id="edit-img-upload-name" style="color:var(--gray);font-size:12px;margin-top:4px;display:block;">
+            Use uma imagem existente da pasta img ou mantenha uma URL/caminho no campo acima.
+          </small>
+          <div id="edit-img-preview" class="admin-img-preview" aria-hidden="true"></div>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; justify-content: space-between;">
+          <button type="button" class="btn btn-outline" id="btn-delete" style="color: #ff4d4d; border-color: #ff4d4d;">Excluir</button>
+          <div>
+            <button type="button" class="btn btn-outline" id="btn-cancel" style="margin-right:10px;">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../supabase.js?v=admin-login-3"></script>
+  <script src="../data.js?v=admin-login-3"></script>
+  <script src="admin.js?v=admin-login-3"></script>
+</body>
+</html>
