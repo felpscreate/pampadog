@@ -341,6 +341,97 @@ function initSobreMobileModals() {
   });
 }
 
+function initCardapioMobileEnhancements() {
+  const isCardapio = document.body && document.querySelector('.cat-filter') && document.querySelector('.menu-section[data-cat]');
+  if (!isCardapio) return;
+
+  const mobileOnly = window.matchMedia('(max-width: 768px)');
+  const modal = document.getElementById('cardapio-product-modal');
+  const closeBtn = document.getElementById('cardapio-modal-close');
+  const imgEl = document.getElementById('cardapio-modal-img');
+  const titleEl = document.getElementById('cardapio-modal-title');
+  const descEl = document.getElementById('cardapio-modal-desc');
+  const priceEl = document.getElementById('cardapio-modal-price');
+  const orderEl = document.getElementById('cardapio-modal-order');
+  const scrollCue = document.querySelector('.cardapio-scroll-cue');
+
+  function closeProductModal() {
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function openProductModal(card) {
+    if (!mobileOnly.matches || !modal) return;
+    const imgWrap = card.querySelector('.menu-card-img');
+    const title = card.querySelector('.menu-card-name')?.textContent.trim() || '';
+    const desc = card.querySelector('.menu-card-desc')?.textContent.trim() || '';
+    const price = card.querySelector('.menu-price')?.textContent.trim() || '';
+    const order = card.querySelector('[data-action="pedido"]');
+
+    imgEl.innerHTML = imgWrap ? imgWrap.innerHTML : '';
+    titleEl.textContent = title;
+    descEl.textContent = desc;
+    priceEl.textContent = price;
+    orderEl.href = order?.getAttribute('href') || '#';
+    orderEl.setAttribute('data-item', order?.getAttribute('data-item') || title);
+
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  document.addEventListener('click', (event) => {
+    const card = event.target.closest('.menu-card');
+    if (!card || !mobileOnly.matches) return;
+    if (event.target.closest('a, button')) return;
+    openProductModal(card);
+  });
+
+  closeBtn?.addEventListener('click', closeProductModal);
+  modal?.addEventListener('click', (event) => {
+    if (event.target === modal) closeProductModal();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal?.classList.contains('open')) closeProductModal();
+  });
+
+  function syncScrollCue() {
+    if (!scrollCue) return;
+    scrollCue.classList.toggle('is-hidden', !mobileOnly.matches || window.scrollY > 80);
+  }
+
+  window.addEventListener('scroll', syncScrollCue, { passive: true });
+  mobileOnly.addEventListener?.('change', syncScrollCue);
+  syncScrollCue();
+
+  const scroller = document.querySelector('.cat-filter-inner');
+  if (!scroller) return;
+
+  let direction = 1;
+  let pausedUntil = 0;
+  const pause = () => { pausedUntil = Date.now() + 2500; };
+
+  scroller.addEventListener('pointerdown', pause, { passive: true });
+  scroller.addEventListener('touchstart', pause, { passive: true });
+  scroller.addEventListener('wheel', pause, { passive: true });
+  scroller.addEventListener('click', pause, { passive: true });
+
+  function autoScrollCategories() {
+    if (!mobileOnly.matches) return;
+    if (Date.now() < pausedUntil) return;
+
+    const max = scroller.scrollWidth - scroller.clientWidth;
+    if (max <= 0) return;
+    if (scroller.scrollLeft >= max - 1) direction = -1;
+    if (scroller.scrollLeft <= 1) direction = 1;
+    scroller.scrollLeft += direction;
+  }
+
+  setInterval(autoScrollCategories, 70);
+}
+
 // ============================================================
 // INIT
 // ============================================================
@@ -352,6 +443,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCatFilter();
   initOrderButtons();
   initSobreMobileModals();
+  initCardapioMobileEnhancements();
   addWhatsappFloat();
 
   function renderDynamicContent() {

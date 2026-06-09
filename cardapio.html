@@ -48,6 +48,7 @@
       <p class="section-sub" style="margin: 16px auto 0; text-align: center;">
         Escolha seu favorito e peça agora.
       </p>
+    <div class="cardapio-scroll-cue" aria-hidden="true">⬇️</div>
     </div>
   </div>
 
@@ -115,8 +116,8 @@
         <div class="footer-col">
           <h4>Atendimento</h4>
           <ul>
+            <li><a href="https://pedido.anota.ai/loja/pampa-dog-1?f=msa" target="_blank" rel="noopener">📱 Pedir Agora pela Loja</a></li>
             <li><a href="https://www.ifood.com.br/delivery/montes-claros-mg/pampa-dog-cachorro-quente-gaucho-sagrada-familia/5d9fef41-5d75-4d90-aed8-82a3062d49ee?utm_medium=share" target="_blank" rel="noopener">🛵 Pedir pelo iFood</a></li>
-            <li><a href="https://pedido.anota.ai/loja/pampa-dog-1?f=msa" target="_blank" rel="noopener">📱 Pedir Agora pelo Anota Ai</a></li>
             <li><a href="https://wa.me/553899063376" target="_blank" rel="noopener">💬 Falar no WhatsApp</a></li>
             <li><a href="https://www.google.com/maps/search/?api=1&query=Av.%20Cula%20Mangabeira%2C%201608%20-%20Santo%20Expedito%2C%20Montes%20Claros%20-%20MG%2C%2039400-780" target="_blank" rel="noopener">📍 Veja como Chegar</a></li>
             <li><a href="cardapio.html">📖 Ver Cardápio</a></li>
@@ -131,8 +132,22 @@
     </div>
   </footer>
 
-  <script src="supabase.js?v=cardapio-restore"></script>
-  <script src="data.js?v=cardapio-restore"></script>
-  <script src="script.js?v=cardapio-restore"></script>
+
+  <div class="cardapio-product-modal" id="cardapio-product-modal" aria-hidden="true">
+    <div class="cardapio-product-dialog" role="dialog" aria-modal="true" aria-labelledby="cardapio-modal-title">
+      <button type="button" class="cardapio-modal-close" id="cardapio-modal-close" aria-label="Fechar">&times;</button>
+      <div class="cardapio-modal-img" id="cardapio-modal-img"></div>
+      <div class="cardapio-modal-body">
+        <h3 id="cardapio-modal-title"></h3>
+        <p id="cardapio-modal-desc"></p>
+        <div class="cardapio-modal-footer">
+          <strong id="cardapio-modal-price"></strong>
+          <a href="#" target="_blank" rel="noopener" class="btn btn-primary btn-sm" id="cardapio-modal-order">Pedir Agora</a>
+        </div>
+      </div>
+    </div>
+  </div>  <script src="supabase.js?v=cardapio-mobile"></script>
+  <script src="data.js?v=cardapio-mobile"></script>
+  <script src="script.js?v=cardapio-mobile"></script>
 </body>
 </html>

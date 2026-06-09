@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const listEl = document.getElementById('admin-list');
   const tabsEl = document.getElementById('admin-tabs');
+  const header = document.getElementById('header');
   const modal = document.getElementById('edit-modal');
   const form = document.getElementById('edit-form');
   const imgInput = document.getElementById('edit-img-cardapio');
@@ -19,10 +20,87 @@ document.addEventListener('DOMContentLoaded', () => {
   const linkTypeSelect = document.getElementById('edit-link-type');
   const productUrlInput = document.getElementById('edit-product-url');
   const productUrlGroup = document.getElementById('edit-product-url-group');
+  const loginScreen = document.getElementById('admin-login-screen');
+  const loginForm = document.getElementById('admin-login-form');
+  const loginUserInput = document.getElementById('admin-login-user');
+  const loginPasswordInput = document.getElementById('admin-login-password');
+  const loginError = document.getElementById('admin-login-error');
+  const logoutBtn = document.getElementById('btn-admin-logout');
+  const mainEl = document.querySelector('main');
+  const AUTH_KEY = 'pampaDog_admin_auth';
+  const AUTH_USER = 'pampadogmg';
+  const AUTH_PASS = 'P4mp@dogrs';
   
   let currentCategory = 'all';
   let selectedUploadUrl = '';
   let selectedUploadFile = null;
+  let initialized = false;
+
+  function isAuthenticated() {
+    try {
+      return sessionStorage.getItem(AUTH_KEY) === '1';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function setAuthenticated(value) {
+    try {
+      if (value) sessionStorage.setItem(AUTH_KEY, '1');
+      else sessionStorage.removeItem(AUTH_KEY);
+    } catch (e) {}
+  }
+
+  function showLogin() {
+    if (loginScreen) loginScreen.style.display = 'flex';
+    if (header) header.style.display = 'none';
+    if (mainEl) mainEl.style.display = 'none';
+    if (modal) {
+      modal.classList.remove('active');
+      modal.style.display = 'none';
+    }
+    if (loginUserInput) loginUserInput.focus();
+  }
+
+  async function showAdmin() {
+    if (loginScreen) loginScreen.style.display = 'none';
+    if (header) header.style.display = '';
+    if (mainEl) mainEl.style.display = '';
+    if (modal) modal.style.display = '';
+    if (!initialized) {
+      initialized = true;
+      await init();
+    }
+  }
+
+  function setupAuth() {
+    if (loginForm) {
+      loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const user = (loginUserInput.value || '').trim();
+        const pass = loginPasswordInput.value || '';
+
+        if (user === AUTH_USER && pass === AUTH_PASS) {
+          setAuthenticated(true);
+          if (loginError) loginError.style.display = 'none';
+          loginPasswordInput.value = '';
+          await showAdmin();
+        } else if (loginError) {
+          loginError.style.display = 'block';
+        }
+      });
+    }
+
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        setAuthenticated(false);
+        showLogin();
+      });
+    }
+
+    if (isAuthenticated()) showAdmin();
+    else showLogin();
+  }
 
   function resolveAdminAssetPath(src) {
     if (!src) return '';
@@ -443,5 +521,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // START
-  init();
+  setupAuth();
 });

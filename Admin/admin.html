@@ -13,6 +13,29 @@
 </head>
 <body>
 
+  <section id="admin-login-screen" style="min-height:100vh; display:none; align-items:center; justify-content:center; padding:24px; background:var(--dark);">
+    <form id="admin-login-form" style="width:100%; max-width:380px; background:var(--dark-2); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:28px; box-shadow:var(--shadow-card);">
+      <div style="text-align:center; margin-bottom:22px;">
+        <img src="../Logo.png" alt="Pampa Dog Logo" style="height:64px; width:auto; object-fit:contain; margin:0 auto 12px;">
+        <h1 style="font-size:24px; margin:0;">Admin Pampa Dog</h1>
+        <p style="color:var(--gray); font-size:14px; margin-top:6px;">Acesse para gerenciar os produtos.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="admin-login-user">Login</label>
+        <input type="text" id="admin-login-user" autocomplete="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="admin-login-password">Senha</label>
+        <input type="password" id="admin-login-password" autocomplete="current-password" required>
+      </div>
+
+      <p id="admin-login-error" style="display:none; color:#ff6b6b; font-size:13px; margin-bottom:12px;">Login ou senha incorretos.</p>
+      <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Entrar</button>
+    </form>
+  </section>
+
   <!-- HEADER SIMPLIFICADO -->
   <header class="header" id="header">
     <div class="header-inner">
@@ -22,6 +45,7 @@
       </a>
       <nav class="nav-links">
         <a href="../index.html">← Voltar ao Site</a>
+        <button class="btn btn-outline" id="btn-admin-logout" type="button" style="padding:8px 14px;">Sair</button>
       </nav>
     </div>
   </header>
@@ -142,8 +166,8 @@
     </div>
   </div>
 
-  <script src="../supabase.js?v=import-persist-fix"></script>
-  <script src="../data.js?v=import-persist-fix"></script>
-  <script src="admin.js?v=import-persist-fix"></script>
+  <script src="../supabase.js?v=admin-login"></script>
+  <script src="../data.js?v=admin-login"></script>
+  <script src="admin.js?v=admin-login"></script>
 </body>
 </html>
