@@ -3071,6 +3071,247 @@ input:checked + .slider:before {
   transform: translateY(0);
 }
 
+.admin-mobile-fab-wrap,
+.admin-mobile-fab-menu,
+.admin-mobile-flags,
+.admin-mobile-badges {
+  display: none;
+}
+
+.admin-tab-short {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .admin-container {
+    margin: 18px auto;
+    padding: 14px;
+    padding-bottom: 96px;
+  }
+
+  .admin-header {
+    gap: 12px !important;
+    margin-bottom: 16px;
+  }
+
+  .admin-header > div:last-child {
+    display: none !important;
+  }
+
+  .admin-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .admin-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .admin-tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+
+  .admin-tab-full {
+    display: none;
+  }
+
+  .admin-tab-short {
+    display: inline;
+  }
+
+  .admin-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .admin-card {
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    gap: 0;
+  }
+
+  .admin-card-header {
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0;
+  }
+
+  .admin-card-img {
+    width: 54px;
+    height: 54px;
+    flex: 0 0 54px;
+  }
+
+  .admin-card-info {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .admin-card-title {
+    font-size: 15px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .admin-card-cat {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .admin-mobile-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .admin-mobile-badges span {
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.07);
+    color: var(--gray);
+    border-radius: 999px;
+    padding: 3px 7px;
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .admin-switches,
+  .admin-actions {
+    display: none;
+  }
+
+  .admin-backup {
+    padding: 14px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .admin-backup > div:last-child {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .admin-backup .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .admin-mobile-fab-wrap {
+    display: block;
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 10000;
+  }
+
+  .admin-mobile-fab {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: var(--yellow);
+    color: var(--dark);
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 800;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  }
+
+  .admin-mobile-fab-menu {
+    position: absolute;
+    right: 0;
+    bottom: 64px;
+    width: min(260px, calc(100vw - 36px));
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 14px;
+    background: var(--dark-2);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+  }
+
+  .admin-mobile-fab-menu.active {
+    display: flex;
+  }
+
+  .admin-mobile-fab-menu button {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    color: var(--white);
+    padding: 12px;
+    text-align: left;
+    font-weight: 700;
+  }
+
+  .modal-overlay {
+    align-items: center;
+    padding: 10px;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-height: calc(100dvh - 20px);
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  .modal-header {
+    position: sticky;
+    top: -18px;
+    z-index: 2;
+    background: var(--dark-2);
+    padding: 0 0 12px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .admin-mobile-flags {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  #edit-form > div:last-child {
+    position: sticky;
+    bottom: -18px;
+    z-index: 2;
+    margin: 16px -18px -18px !important;
+    padding: 12px 18px 18px;
+    background: var(--dark-2);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    gap: 10px;
+    align-items: center;
+  }
+
+  #edit-form > div:last-child > div {
+    display: flex;
+    gap: 8px;
+  }
+
+  #btn-cancel {
+    margin-right: 0 !important;
+  }
+}
+
 /* ============================================================
    BOTÕES 2x2 E FILTROS HOME
    ============================================================ */
