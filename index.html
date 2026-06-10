@@ -12,16 +12,11 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌭</text></svg>" />
 </head>
 <body>
-
-  <!-- ============================================================
-       HEADER
-       ============================================================ -->
   <header class="header" role="banner">
     <nav class="nav" aria-label="Navegação principal">
       <a href="index.html" class="logo" aria-label="Pampa Dog – Página inicial">
         <img src="Logo.png" alt="Pampa Dog Logo" style="height: 56px; width: auto; object-fit: contain;">
       </a>
-
       <ul class="nav-links" id="nav-links" role="list">
         <li><a href="index.html" class="active">Início</a></li>
         <li><a href="cardapio.html">Cardápio</a></li>
@@ -42,10 +37,6 @@
       </button>
     </nav>
   </header>
-
-  <!-- ============================================================
-       HERO / CAROUSEL
-       ============================================================ -->
   <section class="hero" id="inicio" aria-label="Banner principal">
     <div class="carousel" aria-hidden="true">
       <!-- Slide 1 -->
@@ -138,25 +129,7 @@
         </div>
       </div>
     </div>
-
-    <!-- Carousel Controls -->
-    <!----- <div class="carousel-controls">
-      <button class="carousel-arrow" id="carousel-prev" aria-label="Slide anterior">&#8592;</button>
-      <div class="carousel-dots" role="tablist">
-        <button class="carousel-dot active" aria-label="Slide 1"></button>
-        <button class="carousel-dot" aria-label="Slide 2"></button>
-        <button class="carousel-dot" aria-label="Slide 3"></button>
-        <button class="carousel-dot" aria-label="Slide 4"></button>
-        <button class="carousel-dot" aria-label="Slide 5"></button>
-        <button class="carousel-dot" aria-label="Slide 6"></button>
-      </div>
-      <button class="carousel-arrow" id="carousel-next" aria-label="Próximo slide">&#8594;</button>
-    </div>----->
   </section>
-
-  <!-- ============================================================
-       PRODUTOS DA SEMANA
-       ============================================================ -->
   <section id="produtos-semana" style="display:none; background: var(--dark-2);" aria-labelledby="semana-title">
     <div class="section-inner">
       <div style="text-align: center; margin-bottom: 40px;" class="reveal">
@@ -164,9 +137,7 @@
         <h2 class="section-title" id="semana-title">
           Seleção <span class="highlight">Especial</span>
         </h2>
-        
-        <!-- Filtros Rápidos -->
-        <div class="home-filters" style="display:flex; justify-content:center; gap:10px; margin-top:20px; flex-wrap:wrap;">
+       <div class="home-filters" style="display:flex; justify-content:center; gap:10px; margin-top:20px; flex-wrap:wrap;">
           <button class="btn-chip active" data-filter="all">Todos</button>
           <button class="btn-chip" data-filter="promocao">🔥 Promoções</button>
           <button class="btn-chip" data-filter="mais-pedido">⭐ Mais Pedidos</button>
@@ -176,11 +147,7 @@
       <div id="semana-carousel-container" class="reveal">
         <!-- Renderizado via JS (data.js) -->
       </div>
-
-      <!-- ============================================================
-           CTA (Movido para dentro de destaques)
-           ============================================================ -->
-      <div id="cta" style="margin-top: 60px;">
+    <div id="cta" style="margin-top: 60px;">
         <div class="cta-box reveal">
           <div class="cta-text">
             <h2 class="cta-title">Bateu a fome? 🤤</h2>
@@ -222,10 +189,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ============================================================
-       CONTATO / LOCALIZAÇÃO
-       ============================================================ -->
   <section id="contato" aria-labelledby="contato-title">
     <div class="section-inner">
       <div>
@@ -243,8 +206,6 @@
             <div>
               <p class="info-label">Endereço</p>
               <p class="info-value">
-                <!-- ↓ Substitua pelo endereço real -->
-
                 Av. Cula Mangabeira, 1608 - Santo Expedito<br>Montes Claros - MG, 39400-780
               </p>
             </div>
@@ -319,10 +280,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ============================================================
-       FOOTER
-       ============================================================ -->
   <footer class="footer" role="contentinfo">
     <div class="footer-inner">
       <div class="footer-main">
@@ -363,12 +320,8 @@
 
       <div class="footer-bottom">
         <p>© 2025 <span>Pampa Dog</span>. Todos os direitos reservados.</p>
-        <p>🚀 Desenvolvido por <span><a href="https://felpscreate.github.io/"> Felps Create </a></span></p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="supabase.js"></script>
+        <p>🚀 Desenvolvido por <span><a href="https://felpscreate.github.io/"> Felps Create </a></span></p>      </div>    </div>
+  </footer>  <script src="supabase.js"></script>
   <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
