@@ -116,9 +116,58 @@ document.addEventListener('DOMContentLoaded', () => {
     return '../' + src.replace(/^\.\//, '');
   }
 
+  function normalizeCategoryKey(category) {
+    return String(category || '')
+      .trim()
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  }
+
   function normalizeCategory(category) {
-    if (category === 'burgers') return 'classicos';
-    return category;
+    const key = normalizeCategoryKey(category);
+    const aliases = {
+      all: 'all',
+      todos: 'all',
+      todas: 'all',
+      hotdog: 'hotdogs',
+      hotdogs: 'hotdogs',
+      'hot dog': 'hotdogs',
+      'hot dogs': 'hotdogs',
+      classico: 'classicos',
+      classicos: 'classicos',
+      'classicos do rio grande do sul': 'classicos',
+      burger: 'classicos',
+      burgers: 'classicos',
+      combo: 'combos',
+      combos: 'combos',
+      bebida: 'bebidas',
+      bebidas: 'bebidas'
+    };
+
+    if (aliases[key]) return aliases[key];
+
+    const matchingCategory = Object.entries(PD.catLabel).find(([cat, label]) => {
+      return normalizeCategoryKey(cat) === key || normalizeCategoryKey(label) === key;
+    });
+
+    return matchingCategory ? matchingCategory[0] : key;
+  }
+
+  function setActiveCategory(category) {
+    const normalizedCategory = normalizeCategory(category);
+    currentCategory = normalizedCategory === 'all' ||
+      Object.prototype.hasOwnProperty.call(PD.catLabel, normalizedCategory)
+      ? normalizedCategory
+      : 'all';
+
+    tabsEl.querySelectorAll('.admin-tab').forEach(button => {
+      const isActive = normalizeCategory(button.dataset.cat) === currentCategory;
+      button.classList.toggle('active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
   }
 
   function getAdminCardBackground(category) {
@@ -278,32 +327,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // RENDER TABS
   function renderTabs() {
-    let html = `<button class="admin-tab active" data-cat="all">🌟 Todos</button>`;
+    let html = `<button class="admin-tab" type="button" data-cat="all">🌟 Todos</button>`;
     
     for (const [cat, label] of Object.entries(PD.catLabel)) {
       const mobileLabel = cat === 'classicos' ? 'Clássicos' : label;
-      html += `<button class="admin-tab" data-cat="${cat}">${PD.catEmoji[cat]} <span class="admin-tab-full">${label}</span><span class="admin-tab-short">${mobileLabel}</span></button>`;
+      html += `<button class="admin-tab" type="button" data-cat="${normalizeCategory(cat)}">${PD.catEmoji[cat]} <span class="admin-tab-full">${label}</span><span class="admin-tab-short">${mobileLabel}</span></button>`;
     }
     
     tabsEl.innerHTML = html;
-    
-    tabsEl.querySelectorAll('.admin-tab').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        tabsEl.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        currentCategory = e.target.getAttribute('data-cat');
-        renderList();
-      });
-    });
+    setActiveCategory(currentCategory);
   }
 
   // RENDER LISTA DE PRODUTOS
   function renderList() {
     const products = PD.getProducts();
-    let filtered = products;
+    setActiveCategory(currentCategory);
+    let filtered = products.slice();
     
     if (currentCategory !== 'all') {
-      filtered = products.filter(p => normalizeCategory(p.category) === currentCategory);
+      filtered = products.filter(product => normalizeCategory(product.category) === currentCategory);
     }
     
     listEl.innerHTML = filtered.map(p => {
@@ -365,7 +407,9 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           
           <div class="admin-actions">
-            <button class="btn btn-outline" style="width:100%; padding:8px;" onclick="window.editProduct('${p.id}')">✏️ Editar Dados</button>
+            <button class="btn btn-outline" type="button" style="width:100%; padding:8px;" onclick="window.editProduct('${p.id}')" aria-label="Editar ${p.name}">
+              <span aria-hidden="true">&#9998;&#65039;</span> Editar Dados
+            </button>
           </div>
         </div>
       `;
@@ -392,6 +436,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // EVENTOS GERAIS
   function bindEvents() {
+    tabsEl.addEventListener('click', event => {
+      const categoryButton = event.target.closest('.admin-tab');
+      if (!categoryButton || !tabsEl.contains(categoryButton)) return;
+
+      setActiveCategory(categoryButton.dataset.cat);
+      renderList();
+    });
+
     document.getElementById('btn-backup-toggle').addEventListener('click', () => {
       const panel = document.getElementById('backup-panel');
       panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
@@ -463,9 +515,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-delete').addEventListener('click', async () => {
       const id = document.getElementById('edit-id').value;
       if (id && confirm('Tem certeza que deseja excluir este produto?')) {
-        await PD.deleteProduct(id);
-        closeModal();
-        renderList();
+        const deleteButton = document.getElementById('btn-delete');
+        deleteButton.disabled = true;
+        try {
+          await PD.deleteProduct(id);
+          if (PD.loadProductsOnline) await PD.loadProductsOnline();
+          closeModal();
+          renderList();
+          showToast('Produto excluído com sucesso.');
+        } catch (error) {
+          console.error('[Pampa Dog] Falha ao excluir produto.', error);
+          alert(error.message || 'Não foi possível excluir o produto. Tente novamente.');
+        } finally {
+          deleteButton.disabled = false;
+        }
       }
     });
 
